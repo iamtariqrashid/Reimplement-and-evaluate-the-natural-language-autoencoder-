@@ -1,0 +1,22 @@
+{
+  "control_shuffled": {
+    "fve_global": -0.04766501061409656,
+    "mse_mean": 97.5740737915039,
+    "mse_median": 41.72834777832031,
+    "cosine_mean": 0.9896040558815002,
+    "cosine_median": 0.991470456123352,
+    "fve_sample_mean": -0.0575866661965847,
+    "fve_sample_median": -0.007085204124450684
+  },
+  "real": {
+    "fve_global": 0.9379357763277687,
+    "mse_mean": 5.780338764190674,
+    "mse_median": 5.259756088256836,
+    "cosine_mean": 0.9935271739959717,
+    "cosine_median": 0.9944215416908264,
+    "fve_sample_mean": 0.7812120318412781,
+    "fve_sample_median": 0.8946213722229004
+  },
+  "delta_fve_global": 0.9856007869418653,
+  "delta_fve_sample_mean": 0.8387986980378628
+}

@@ -1,0 +1,70 @@
+# =====================================================================
+# Natural Language Autoencoder (Small) — central configuration
+# Edit values here; all scripts read from this file.
+# =====================================================================
+
+seed: 42
+
+paths:
+  data_dir: data
+  results_dir: results
+  checkpoints_dir: checkpoints
+
+# ---------------- Data ----------------
+data:
+  dataset_name: Salesforce/wikitext
+  dataset_config: wikitext-2-raw-v1
+  split: train
+  num_samples: 2000          # 2000 = best balance of reliability and runtime
+  min_chars: 80              # filter out very short / empty lines
+  max_chars: 400             # avoid extremely long sequences
+  texts_file: texts.jsonl
+
+# ---------------- LLM ----------------
+model:
+  name: HuggingFaceTB/SmolLM2-360M-Instruct
+  # Fallbacks if the above fails to download:
+  #   Qwen/Qwen2.5-0.5B-Instruct
+  #   gpt2
+  layer_index: -1            # -1 = use 2/3-depth layer auto-computed at runtime
+  pooling: mean              # "mean" or "last"
+  max_length: 128
+  batch_size: 8              # lower to 2-4 if you OOM
+  dtype: float32             # use "float16" on GPU for speed
+
+# ---------------- Activation extraction ----------------
+activations:
+  file: activations.npy
+
+# ---------------- Verbalizer (KMeans + templates) ----------------
+verbalizer:
+  num_clusters: 32           # 32 clusters gives good resolution with 2000 samples
+  kmeans_n_init: 10
+  top_k_examples: 5          # representative texts per cluster (for inspection)
+  clusters_file: clusters.json
+  verbalizations_file: verbalizations.jsonl
+
+# ---------------- Sentence embedder for explanations ----------------
+embedder:
+  name: sentence-transformers/all-MiniLM-L6-v2
+  batch_size: 32
+
+# ---------------- Reconstructor (MLP) ----------------
+reconstructor:
+  hidden_dims: [512, 1024]
+  dropout: 0.1
+  lr: 1.0e-3
+  weight_decay: 1.0e-5
+  batch_size: 64
+  epochs: 50
+  val_frac: 0.1
+  test_frac: 0.1
+  early_stopping_patience: 7
+  checkpoint_file: reconstructor.pt
+
+# ---------------- Evaluation ----------------
+eval:
+  results_file: eval_results.json
+  per_cluster_file: per_cluster_results.csv
+  qualitative_file: qualitative_examples.csv
+  num_qualitative: 30

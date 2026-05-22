@@ -1,0 +1,10 @@
+{
+  "model_name": "HuggingFaceTB/SmolLM2-360M-Instruct",
+  "num_hidden_layers": 32,
+  "extracted_layer": 21,
+  "pooling": "mean",
+  "hidden_size": 960,
+  "num_samples": 2000,
+  "max_length": 128,
+  "dtype": "float32"
+}
